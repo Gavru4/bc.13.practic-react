@@ -5,19 +5,32 @@ import TransactionListPage from "./components/TransactionListPage/TransactionLis
 
 class App extends Component {
   state = {
-    activePage: "main", //main || transactionList
-  };
+    activePage: "main", //main || incomes || costs
+  }
 
-  changePage = (activePage) => this.setState({ activePage });
+  changePage = (activePage) => this.setState({ activePage, })
 
   render() {
     return (
       <div>
         <h1>React Practic</h1>
-        {this.state.activePage === "main" && <MainPage />}
-        {this.state.activePage === "transactionList" && <TransactionListPage />}
+        {this.state.activePage === "main" && (
+          <MainPage changePage={this.changePage} />
+        )}
+        {this.state.activePage === "incomes" && (
+          <TransactionListPage
+            changePage={this.changePage}
+            transType={"incomes"}
+          />
+        )}
+        {this.state.activePage === "costs" && (
+          <TransactionListPage
+            changePage={this.changePage}
+            transType={"costs"}
+          />
+        )}
       </div>
-    );
+    )
   }
 }
 
