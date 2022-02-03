@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { nanoid } from "nanoid";
 
 class CategoryList extends Component {
   state = {
@@ -9,14 +10,27 @@ class CategoryList extends Component {
     const { value } = e.terget;
     this.setState({ inputCategory: value });
   };
+
+  hendlerSubmitCategory = (e) => {
+    e.preventDefault();
+    const newCategory = {
+      title: this.state.inputCategory,
+      id: nanoid(),
+    };
+    this.props.addCategory(newCategory);
+    this.reset();
+  };
+  reset = () => {
+    this.setState({ inputCategory: "" });
+  };
   render() {
     const { categorieslist } = this.props;
     return (
       <>
         <ul>
           {categorieslist.map((el) => {
-            <li>
-              <p>Title</p>
+            <li key={el.id}>
+              <p>{el.title}</p>
               <button>...</button>
               <div>
                 <button>Delate</button>
@@ -25,7 +39,7 @@ class CategoryList extends Component {
             </li>;
           })}
         </ul>
-        <form action="">
+        <form action="" onSubmit={this.hendlerSubmitCategory}>
           <input
             type="text"
             placeholder="new category"

@@ -16,7 +16,12 @@ class TransactionForm extends Component {
     const { name, value } = e.target;
     this.setState({ [name]: value });
   };
-  handleSubmit = (e) => {
+  addCategory = (newCategory) => {
+    this.setState((prevstate) => ({
+      categorieslist: [...prevState.categorieslist, newCategory],
+    }));
+  };
+  handleSubmitTrans = (e) => {
     e.preventDefault();
   };
 
@@ -90,7 +95,10 @@ class TransactionForm extends Component {
           </label>
           <button type="submit">Submit</button>
         </form>
-        <CategoryList categorieslist={categorieslist} />
+        <CategoryList
+          categorieslist={categorieslist}
+          addCategory={this.addCategory}
+        />
       </>
     );
   }
