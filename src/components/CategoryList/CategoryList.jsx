@@ -1,56 +1,63 @@
-import React, { Component } from "react";
-import { nanoid } from "nanoid";
+import { Component } from "react"
+import { nanoid } from 'nanoid'
+
 
 class CategoryList extends Component {
   state = {
     inputCategory: "",
-  };
+  }
 
   handleInputChange = (e) => {
-    const { value } = e.terget;
-    this.setState({ inputCategory: value });
-  };
+    const { value } = e.target
+    this.setState({ inputCategory: value })
+  }
 
-  hendlerSubmitCategory = (e) => {
+  handleSubmitCategoty = (e) => {
     e.preventDefault();
     const newCategory = {
       title: this.state.inputCategory,
       id: nanoid(),
-    };
-    this.props.addCategory(newCategory);
-    this.reset();
-  };
+    }
+   
+    this.props.addCategory(newCategory)
+    this.reset()
+  }
   reset = () => {
-    this.setState({ inputCategory: "" });
-  };
+    this.setState({inputCategory: ''})
+  }
+
   render() {
-    const { categorieslist } = this.props;
+    const { categoriesList, toggleOpenCategoryList, setCategory } = this.props
     return (
       <>
+        <button onClick={toggleOpenCategoryList} type="button">
+          Назад
+        </button>
+        <h2>Категории</h2>
         <ul>
-          {categorieslist.map((el) => {
+          {categoriesList.map((el) => (
             <li key={el.id}>
-              <p>{el.title}</p>
-              <button>...</button>
-              <div>
-                <button>Delate</button>
+              <p onClick={() => setCategory(el.title)}>{el.title}</p>
+              <button type="button">...</button>
+              {/* <div>
+                <button>Delete</button>
                 <button>Edit</button>
-              </div>
-            </li>;
-          })}
+              </div> */}
+            </li>
+          ))}
         </ul>
-        <form action="" onSubmit={this.hendlerSubmitCategory}>
+        <form action="" onSubmit={this.handleSubmitCategoty}>
           <input
-            type="text"
-            placeholder="new category"
-            name="text"
-            value={this.state.inputCategory}
             onChange={this.handleInputChange}
+            type="text"
+            placeholder="Создать категорию"
+            value={this.state.inputCategory}
           />
           <button type="submit">+</button>
         </form>
       </>
-    );
+    )
   }
 }
-export default CategoryList;
+
+export default CategoryList
