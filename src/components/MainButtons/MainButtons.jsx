@@ -3,7 +3,7 @@ const MainButtons = ({ changePage }) => {
     <>
       <button
         onClick={() => {
-          changePage("incomes")
+          changePage("incomes");
         }}
         type="button"
       >
@@ -11,14 +11,14 @@ const MainButtons = ({ changePage }) => {
       </button>
       <button
         onClick={() => {
-          changePage("costs")
+          changePage("incomes");
         }}
         type="button"
       >
         Расходы
       </button>
     </>
-  )
-}
- 
+  );
+};
+
 export default MainButtons;

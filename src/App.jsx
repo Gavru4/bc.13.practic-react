@@ -6,27 +6,32 @@ import TransactionListPage from "./components/TransactionListPage/TransactionLis
 class App extends Component {
   state = {
     activePage: "main", //main || incomes || costs
-    transactions: [],
-  }
+    // transactions: [],
+    incomes: [],
+    costs: [],
+  };
 
-  changePage = (activePage) => this.setState({ activePage, })
+  changePage = (activePage) => this.setState({ activePage });
 
   addTransaction = (newTransaction) => {
-    this.setState(({ transactions }) => ({
-      transactions: [...transactions, newTransaction],
-    }))
-  }
-  componentDidMount() {
-    const transactions = JSON.parse(localStorage.getItem("transactions"))  || []
-    this.setState({ transactions})
-  }
+    const transType = newTransaction.transType; //incomes || costs
+    this.setState((prevState) => ({
+      [transType]: [...prevState[transType], newTransaction],
+    }));
+  };
+  // componentDidMount() {
+  //   const transactions = JSON.parse(localStorage.getItem("transactions")) || [];
+  //   this.setState({ transactions });
+  // }
 
-  componentDidUpdate(prevProps, prevState) {
-    if ( prevState.transactions !==  this.state.transactions) {
-        localStorage.setItem('transactions',  JSON.stringify(this.state.transactions))
-      }
-    }
-
+  // componentDidUpdate(prevProps, prevState) {
+  //   if (prevState.transactions !== this.state.transactions) {
+  //     localStorage.setItem(
+  //       "transactions",
+  //       JSON.stringify(this.state.transactions)
+  //     );
+  //   }
+  // }
 
   render() {
     return (
@@ -42,18 +47,18 @@ class App extends Component {
           <TransactionListPage
             changePage={this.changePage}
             transType={"incomes"}
-            transactions={this.state.transactions}
+            transactions={this.state.costs}
           />
         )}
         {this.state.activePage === "costs" && (
           <TransactionListPage
             changePage={this.changePage}
             transType={"costs"}
-            transactions={this.state.transactions}
+            transactions={this.state.costs}
           />
         )}
       </div>
-    )
+    );
   }
 }
 

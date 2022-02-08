@@ -1,0 +1,55 @@
+{
+  "incomes": [],
+  "costs": [
+    {
+      "date": "2022-02-12",
+      "time": "15:41",
+      "category": "Еда",
+      "sum": "558",
+      "curency": "UAH",
+      "comment": "jhgjg",
+      "transType": "costs",
+      "id": "7eqgtNh0likB4jTRxwfUs"
+    },
+    {
+      "date": "2022-02-18",
+      "time": "15:56",
+      "category": "Еда",
+      "sum": "6778",
+      "curency": "UAH",
+      "comment": "fhhfjfgj",
+      "transType": "costs",
+      "id": "a8E0OHmTjzG9mwVJIO-qX"
+    },
+    {
+      "date": "",
+      "time": "15:57",
+      "category": "Еда",
+      "sum": "r66567",
+      "curency": "UAH",
+      "comment": "56756",
+      "transType": "costs",
+      "id": "rgIogsr6MRx5LK5n4_rUS"
+    },
+    {
+      "date": "2022-02-24",
+      "time": "15:59",
+      "category": "Еда",
+      "sum": "456",
+      "curency": "UAH",
+      "comment": "4747",
+      "transType": "costs",
+      "id": "zX4WYhwpypCMajTnmHs3Y"
+    },
+    {
+      "date": "2022-02-19",
+      "time": "18:56",
+      "category": "Еда",
+      "sum": "567",
+      "curency": "UAH",
+      "comment": "fjjgjg",
+      "transType": "costs",
+      "id": "1d_ccB5WBMGPjH0cvUD0E"
+    }
+  ]
+}

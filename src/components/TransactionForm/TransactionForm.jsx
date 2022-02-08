@@ -1,6 +1,7 @@
 import { nanoid } from "nanoid";
-import { Component } from "react"
+import { Component } from "react";
 import CategoryList from "../CategoryList/CategoryList";
+import { postTransaction } from "../../Services/api.js";
 
 class TransactionForm extends Component {
   state = {
@@ -15,70 +16,69 @@ class TransactionForm extends Component {
       { id: 2, title: "Напитки" },
     ],
     transType: "costs",
-  }
+  };
 
   handleChange = (e) => {
-    const { name, value } = e.target
-    this.setState({ [name]: value })
-  }
+    const { name, value } = e.target;
+    this.setState({ [name]: value });
+  };
 
   handleSubmitTransaction = (e) => {
-    e.preventDefault()
-    const {categoriesList, ...dataForm} = this.state
-    dataForm.id = nanoid()
-    this.props.addTransaction(dataForm)
-    this.reset()
-    console.log("ok")
-  }
+    e.preventDefault();
+    const { categoriesList, ...transaction } = this.state;
+    transaction.id = nanoid();
+    postTransaction({ transType: transaction.transType, transaction }).then(
+      (data) => this.props.addTransaction(data)
+    );
+
+    this.reset();
+  };
 
   addCategory = (data) => {
     this.setState((prev) => ({
       categoriesList: [...prev.categoriesList, data],
-    }))
-  }
+    }));
+  };
 
   setCategory = (category) => {
-    this.setState({ category: category })
-    this.props.toggleOpenCategoryList()
-  }
+    this.setState({ category: category });
+    this.props.toggleOpenCategoryList();
+  };
 
   reset = () => {
     const resetedState = Object.keys(this.state).reduce((acc, el) => {
-      if (el === 'categoriesList') return acc;
+      if (el === "categoriesList") return acc;
       if (el === "category") {
-        (acc[el] = "Еда")
-        return acc
+        acc[el] = "Еда";
+        return acc;
       }
       if (el === "date") {
         acc[el] = "2022-02-05";
-        return acc
+        return acc;
       }
-        acc[el] = ""
-      return acc
-    }, {})
+      acc[el] = "";
+      return acc;
+    }, {});
     // this.setState({ :  });
-    console.log(resetedState)
-  }
+    console.log(resetedState);
+  };
 
   render() {
     const { date, time, category, sum, curency, comment, categoriesList } =
-      this.state
+      this.state;
     const { isOpenCategories, toggleOpenCategoryList, addTransaction } =
-      this.props
+      this.props;
     return (
       <>
         {!isOpenCategories ? (
           <>
-            <select name="transactionType"
+            <select
+              name="transactionType"
               value={this.state.transType}
               onChange={this.handleChange}
             >
-              <option value="incomes">
-                Доходы
-              </option>
-              <option value="costs" >
-                Расходы
-              </option>
+              <option value="incomes">Доходы</option>
+              <option value="costs">Расходы</option>
             </select>
             <form onSubmit={this.handleSubmitTransaction} action="">
               <label>
@@ -147,8 +147,8 @@ class TransactionForm extends Component {
           />
         )}
       </>
-    )
+    );
   }
 }
 
-export default TransactionForm
+export default TransactionForm;
