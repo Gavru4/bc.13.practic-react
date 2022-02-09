@@ -1,19 +1,19 @@
 import { nanoid } from "nanoid";
 import { Component } from "react";
+import {postTransaction} from "../../api";
 import CategoryList from "../CategoryList/CategoryList";
-import { postTransaction } from "../../Services/api.js";
 
 class TransactionForm extends Component {
   state = {
-    date: "",
+    date: "2022-02-22",
     time: "",
-    category: "Еда",
-    sum: "",
-    curency: "UAH",
+    category: "eat",
+    currency: "UAH",
     comment: "",
+    total: "",
     categoriesList: [
-      { id: 1, title: "Еда" },
-      { id: 2, title: "Напитки" },
+      { id: 1, title: "Eat" },
+      { id: 2, title: "Drink" },
     ],
     transType: "costs",
   };
@@ -23,126 +23,124 @@ class TransactionForm extends Component {
     this.setState({ [name]: value });
   };
 
-  handleSubmitTransaction = (e) => {
+  addCategory = (newCategory) => {
+    this.setState((prevState) => ({
+      categoriesList: [...prevState.categoriesList, newCategory],
+    }));
+  };
+  handleSubmitTrans = (e) => {
     e.preventDefault();
     const { categoriesList, ...transaction } = this.state;
     transaction.id = nanoid();
-    postTransaction({ transType: transaction.transType, transaction }).then(
-      (data) => this.props.addTransaction(data)
+    postTransaction({ transType:transaction.transType, transaction }).then((data) =>
+      this.props.addTransaction(data)
     );
-
     this.reset();
-  };
-
-  addCategory = (data) => {
-    this.setState((prev) => ({
-      categoriesList: [...prev.categoriesList, data],
-    }));
-  };
-
-  setCategory = (category) => {
-    this.setState({ category: category });
-    this.props.toggleOpenCategoryList();
   };
 
   reset = () => {
     const resetedState = Object.keys(this.state).reduce((acc, el) => {
       if (el === "categoriesList") return acc;
       if (el === "category") {
-        acc[el] = "Еда";
+        acc[el] = "Eat";
         return acc;
       }
       if (el === "date") {
-        acc[el] = "2022-02-05";
+        acc[el] = "2022-02-22";
         return acc;
       }
       acc[el] = "";
       return acc;
     }, {});
-    // this.setState({ :  });
-    console.log(resetedState);
+    this.setState(resetedState);
+  };
+
+  setCategory = (newCategory) => {
+    this.setState({ category: newCategory });
+    this.props.togleCategoryList();
   };
 
   render() {
-    const { date, time, category, sum, curency, comment, categoriesList } =
+    const { data, time, category, total, currency, comment, categoriesList } =
       this.state;
-    const { isOpenCategories, toggleOpenCategoryList, addTransaction } =
-      this.props;
+    const { isOpenCategories, togleCategoryList } = this.props;
     return (
       <>
         {!isOpenCategories ? (
           <>
-            <select
-              name="transactionType"
-              value={this.state.transType}
-              onChange={this.handleChange}
-            >
-              <option value="incomes">Доходы</option>
-              <option value="costs">Расходы</option>
+            <select name="transType" onChange={this.handleChange} value={this.state.transType}>
+              <option value="incomes">Incomes</option>
+              <option value="costs">Costs</option>
             </select>
-            <form onSubmit={this.handleSubmitTransaction} action="">
+            <form onSubmit={this.handleSubmitTrans}>
               <label>
+                Day
                 <input
-                  onChange={this.handleChange}
-                  type="date"
                   name="date"
-                  value={date}
-                />
-              </label>
-              <label>
-                <input
+                  type="date"
+                  value={data}
                   onChange={this.handleChange}
-                  type="time"
-                  name="time"
-                  value={time}
-                />
-              </label>
-              <label>
-                Категория
-                <input
-                  onClick={toggleOpenCategoryList}
-                  type="button"
-                  name="category"
-                  value={category}
                 />
               </label>
 
               <label>
-                Сумма
+                Time
                 <input
+                  name="time"
+                  type="time"
+                  value={time}
                   onChange={this.handleChange}
-                  type="text"
-                  placeholder="Введите сумму"
-                  name="sum"
-                  value={sum}
                 />
               </label>
+
               <label>
-                Валюта
+                Category
                 <input
-                  onChange={this.handleChange}
+                  name="category"
                   type="button"
-                  name="curency"
-                  value={curency}
+                  value={category}
+                  onClick={togleCategoryList}
                 />
               </label>
+
+              <label>
+                Total
+                <input
+                  name="total"
+                  type="text"
+                  placeholder="Enter sum"
+                  value={total}
+                  onChange={this.handleChange}
+                />
+              </label>
+
+              <label>
+                Currency
+                <input
+                  name="currency"
+                  type="button"
+                  value={currency}
+                  onClick={null}
+                />
+              </label>
+
               <label>
                 <input
-                  onChange={this.handleChange}
-                  type="text"
-                  placeholder="Комментарий"
                   name="comment"
+                  type="text"
+                  placeholder="Comment"
                   value={comment}
+                  onChange={this.handleChange}
                 />
               </label>
-              <button type="sunmit">Записать</button>
+              <button type="submit">Submit</button>
             </form>
           </>
         ) : (
           <CategoryList
             categoriesList={categoriesList}
-            toggleOpenCategoryList={toggleOpenCategoryList}
             addCategory={this.addCategory}
+            togleCategoryList={togleCategoryList}
             setCategory={this.setCategory}
           />
         )}
@@ -150,5 +148,4 @@ class TransactionForm extends Component {
     );
   }
 }
-
 export default TransactionForm;

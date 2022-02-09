@@ -1,28 +1,41 @@
 import { Component } from "react";
+import { getTransactions, removeTransactionApi } from "./api";
 import MainPage from "./components/MainPage/MainPage";
 import TransactionListPage from "./components/TransactionListPage/TransactionListPage";
-// import TransactionForm from "./components/TransactionForm/TransactionForm"
 
 class App extends Component {
   state = {
-    activePage: "main", //main || incomes || costs
-    // transactions: [],
-    incomes: [],
+    activePage: "main", //main||transactionList
     costs: [],
+    incomes: [],
+    // transactions: [],
   };
 
   changePage = (activePage) => this.setState({ activePage });
 
-  addTransaction = (newTransaction) => {
-    const transType = newTransaction.transType; //incomes || costs
+  addTransaction = (newTrans) => {
+    const transType = newTrans.transType; //costs/incomes
     this.setState((prevState) => ({
-      [transType]: [...prevState[transType], newTransaction],
+      [transType]: [...prevState[transType], newTrans],
     }));
   };
-  // componentDidMount() {
-  //   const transactions = JSON.parse(localStorage.getItem("transactions")) || [];
-  //   this.setState({ transactions });
-  // }
+
+  componentDidMount() {
+    getTransactions("costs")
+      .then((costs) => this.setState({ costs }))
+      .catch((err) => console.log(err));
+    getTransactions("incomes")
+      .then((incomes) => this.setState({ incomes }))
+      .catch((err) => console.log(err));
+  }
+
+  delTransaction = ({ id, transType }) => {
+    removeTransactionApi({ id, transType }).then((res) =>
+      this.setState((prevState) => ({
+        [transType]: prevState[transType].filter((el) => el.id !== id),
+      }))
+    );
+  };
 
   // componentDidUpdate(prevProps, prevState) {
   //   if (prevState.transactions !== this.state.transactions) {
@@ -36,7 +49,6 @@ class App extends Component {
   render() {
     return (
       <div>
-        <h1>React Practic</h1>
         {this.state.activePage === "main" && (
           <MainPage
             changePage={this.changePage}
@@ -47,7 +59,8 @@ class App extends Component {
           <TransactionListPage
             changePage={this.changePage}
             transType={"incomes"}
-            transactions={this.state.costs}
+            transactions={this.state.incomes}
+            delTransaction={this.delTransaction}
           />
         )}
         {this.state.activePage === "costs" && (
@@ -55,6 +68,7 @@ class App extends Component {
             changePage={this.changePage}
             transType={"costs"}
             transactions={this.state.costs}
+            delTransaction={this.delTransaction}
           />
         )}
       </div>

@@ -1,0 +1,28 @@
+import axios from "axios";
+
+const baseUrl = "http://localhost:3004/";
+
+export const postTransaction = ({ transType, transaction }) => {
+  return axios
+    .post(baseUrl + transType, transaction)
+    .then((res) => res.data)
+    .catch((err) => {
+      throw err;
+    });
+};
+
+export const getTransactions = (transType) => {
+  return axios
+    .get(baseUrl + transType)
+    .then((res) => res.data)
+    .catch((err) => {
+      throw err;
+    });
+};
+
+export const removeTransactionApi = ({id, transType}) => {
+  return axios
+    .delete(baseUrl + transType + "/" + id)
+    .then((res) => res.data)
+    .catch((err) => {throw err});
+};

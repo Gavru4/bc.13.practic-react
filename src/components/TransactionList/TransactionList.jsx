@@ -1,13 +1,13 @@
 import TransactionListItem from "../TransactionListItem/TransactionListItem";
 
-const TransactionList = ({transactions}) => {
+const TransactionList = ({ transactions, delTransaction }) => {
   return (
     <ul>
       {transactions.map((transaction) => (
-        <TransactionListItem {...transaction} key={transaction.id} />
+        <TransactionListItem {...transaction} key={transaction.id} delTransaction={delTransaction}/>
       ))}
     </ul>
-  )
-}
- 
+  );
+};
+
 export default TransactionList;

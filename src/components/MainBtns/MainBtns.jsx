@@ -1,4 +1,4 @@
-const MainButtons = ({ changePage }) => {
+function MainBtns({ changePage }) {
   return (
     <>
       <button
@@ -7,18 +7,18 @@ const MainButtons = ({ changePage }) => {
         }}
         type="button"
       >
-        Доходы
+        Incomes
       </button>
       <button
         onClick={() => {
-          changePage("incomes");
+          changePage("costs");
         }}
         type="button"
       >
-        Расходы
+        Costs
       </button>
     </>
   );
-};
+}
 
-export default MainButtons;
+export default MainBtns;
