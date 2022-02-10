@@ -20,9 +20,11 @@ export const getTransactions = (transType) => {
     });
 };
 
-export const removeTransactionApi = ({id, transType}) => {
+export const removeTransactionApi = ({ id, transType }) => {
   return axios
     .delete(baseUrl + transType + "/" + id)
     .then((res) => res.data)
-    .catch((err) => {throw err});
+    .catch((err) => {
+      throw err;
+    });
 };

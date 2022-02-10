@@ -22,34 +22,34 @@
       "id": "a8E0OHmTjzG9mwVJIO-qX"
     },
     {
-      "date": "",
-      "time": "15:57",
-      "category": "Еда",
-      "sum": "r66567",
-      "curency": "UAH",
-      "comment": "56756",
+      "date": "2022-02-22",
+      "time": "",
+      "category": "eat",
+      "currency": "UAH",
+      "comment": "",
+      "total": "",
       "transType": "costs",
-      "id": "rgIogsr6MRx5LK5n4_rUS"
+      "id": "b5enJpo"
     },
     {
-      "date": "2022-02-24",
-      "time": "15:59",
-      "category": "Еда",
-      "sum": "456",
-      "curency": "UAH",
-      "comment": "4747",
+      "date": "2022-02-22",
+      "time": "",
+      "category": "eat",
+      "currency": "UAH",
+      "comment": "",
+      "total": "",
       "transType": "costs",
-      "id": "zX4WYhwpypCMajTnmHs3Y"
+      "id": "eaMfWlg"
     },
     {
-      "date": "2022-02-19",
-      "time": "18:56",
-      "category": "Еда",
-      "sum": "567",
-      "curency": "UAH",
-      "comment": "fjjgjg",
+      "date": "2022-02-22",
+      "time": "",
+      "category": "eat",
+      "currency": "UAH",
+      "comment": "",
+      "total": "",
       "transType": "costs",
-      "id": "1d_ccB5WBMGPjH0cvUD0E"
+      "id": "JgnlV3C"
     }
   ]
 }

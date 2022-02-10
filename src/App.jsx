@@ -1,79 +1,64 @@
-import { Component } from "react";
+import { useState, useEffect } from "react";
 import { getTransactions, removeTransactionApi } from "./api";
 import MainPage from "./components/MainPage/MainPage";
 import TransactionListPage from "./components/TransactionListPage/TransactionListPage";
 
-class App extends Component {
-  state = {
-    activePage: "main", //main||transactionList
-    costs: [],
-    incomes: [],
-    // transactions: [],
-  };
+const App = () => {
+  const [activePage, setActivePage] = useState("main");
+  const [costs, setCosts] = useState([]);
+  const [incomes, setIncomes] = useState([]);
+  const [transactions, setTransactions] = useState([]);
 
-  changePage = (activePage) => this.setState({ activePage });
+  const changePage = (activePage) => setActivePage(activePage);
 
-  addTransaction = (newTrans) => {
+  const addTransaction = (newTrans) => {
     const transType = newTrans.transType; //costs/incomes
-    this.setState((prevState) => ({
-      [transType]: [...prevState[transType], newTrans],
-    }));
+
+    transType === "costs" && setCosts((prevCosts) => [...prevCosts, newTrans]);
+    transType === "incomes" &&
+      setCosts((prevIncomes) => [...prevIncomes, newTrans]);
   };
 
-  componentDidMount() {
+  useEffect(() => {
     getTransactions("costs")
-      .then((costs) => this.setState({ costs }))
+      .then((costs) => setCosts(costs))
       .catch((err) => console.log(err));
     getTransactions("incomes")
-      .then((incomes) => this.setState({ incomes }))
+      .then((incomes) => setIncomes(incomes))
       .catch((err) => console.log(err));
-  }
+  }, []);
 
-  delTransaction = ({ id, transType }) => {
-    removeTransactionApi({ id, transType }).then((res) =>
-      this.setState((prevState) => ({
-        [transType]: prevState[transType].filter((el) => el.id !== id),
-      }))
-    );
+  const delTransaction = ({ id, transType }) => {
+    removeTransactionApi({ id, transType }).then((res) => {
+      transType === "costs" &&
+        setCosts((prevCosts) => prevCosts.filter((el) => el.id !== id));
+      transType === "incomes" &&
+        setIncomes((prevIncomes) => prevIncomes.filter((el) => el.id !== id));
+    });
   };
-
-  // componentDidUpdate(prevProps, prevState) {
-  //   if (prevState.transactions !== this.state.transactions) {
-  //     localStorage.setItem(
-  //       "transactions",
-  //       JSON.stringify(this.state.transactions)
-  //     );
-  //   }
-  // }
-
-  render() {
-    return (
-      <div>
-        {this.state.activePage === "main" && (
-          <MainPage
-            changePage={this.changePage}
-            addTransaction={this.addTransaction}
-          />
-        )}
-        {this.state.activePage === "incomes" && (
-          <TransactionListPage
-            changePage={this.changePage}
-            transType={"incomes"}
-            transactions={this.state.incomes}
-            delTransaction={this.delTransaction}
-          />
-        )}
-        {this.state.activePage === "costs" && (
-          <TransactionListPage
-            changePage={this.changePage}
-            transType={"costs"}
-            transactions={this.state.costs}
-            delTransaction={this.delTransaction}
-          />
-        )}
-      </div>
-    );
-  }
-}
+  return (
+    <div>
+      {activePage === "main" && (
+        <MainPage changePage={changePage} addTransaction={addTransaction} />
+      )}
+      {activePage === "incomes" && (
+        <TransactionListPage
+          changePage={changePage}
+          transType={"incomes"}
+          transactions={incomes}
+          delTransaction={delTransaction}
+        />
+      )}
+      {activePage === "costs" && (
+        <TransactionListPage
+          changePage={changePage}
+          transType={"costs"}
+          transactions={costs}
+          delTransaction={delTransaction}
+        />
+      )}
+    </div>
+  );
+};
 
 export default App;
