@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { postTransaction } from "../../api";
+import { editTransactionApi, postTransaction } from "../../api";
 import CategoryList from "../CategoryList/CategoryList";
+import { useTransactionsContext } from "../../context/TransactionsProvider/TransactionsProvider";
 
 const initialForm = {
   date: "2022-02-22",
@@ -14,12 +15,16 @@ const initialCategoriesList = [
   { id: 1, title: "Eat" },
   { id: 2, title: "Drink" },
 ];
+
 const TransactionForm = ({
   isOpenCategories,
   togleCategoryList,
-  addTransaction,
+  editingTransaction,
 }) => {
-  const [form, setForm] = useState(initialForm);
+  const { addTransaction } = useTransactionsContext();
+  const [form, setForm] = useState(() =>
+    editingTransaction ? editingTransaction : initialForm
+  );
   const [categoriesList, setCategoriesList] = useState(initialCategoriesList);
   const [transType, setTransType] = useState("costs");
 
@@ -41,10 +46,13 @@ const TransactionForm = ({
 
   const handleSubmitTrans = (e) => {
     e.preventDefault();
-
-    postTransaction({ transType, transaction: { ...form, transType } }).then(
-      (data) => addTransaction(data)
-    );
+    if (editingTransaction) {
+      editTransactionApi({ transType, transaction: form });
+    } else {
+      postTransaction({ transType, transaction: { ...form, transType } }).then(
+        (data) => addTransaction(data)
+      );
+    }
     setForm(initialForm);
   };
 

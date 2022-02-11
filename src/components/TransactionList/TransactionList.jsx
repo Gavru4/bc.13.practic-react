@@ -1,10 +1,17 @@
 import TransactionListItem from "../TransactionListItem/TransactionListItem";
+import { useTransactionsContext } from "../../context/TransactionsProvider/TransactionsProvider";
 
-const TransactionList = ({ transactions, delTransaction }) => {
+const TransactionList = ({ transType, switchEditForm }) => {
+  const { [transType]: transactions } = useTransactionsContext(); //costs, incomes
+
   return (
     <ul>
       {transactions.map((transaction) => (
-        <TransactionListItem {...transaction} key={transaction.id} delTransaction={delTransaction}/>
+        <TransactionListItem
+          transaction={transaction}
+          key={transaction.id}
+          switchEditForm={switchEditForm}
+        />
       ))}
     </ul>
   );

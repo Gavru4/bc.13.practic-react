@@ -1,40 +1,45 @@
-import { Component } from "react";
+import { useState } from "react";
+import { useTransactionsContext } from "../../context/TransactionsProvider/TransactionsProvider";
 
-class TransactionListItem extends Component {
-  state = {
-    isOpenMenu: false,
-  };
+const TransactionListItem = ({ transaction, switchEditForm }) => {
+  const { delTransaction } = useTransactionsContext();
 
-  switchMenu = () =>
-    this.setState((prevState) => ({ isOpenMenu: !prevState.isOpenMenu }));
+  const [isOpenMenu, setIsOpenMenu] = useState(false);
 
-  render() {
-    const { comment, currency, date, time, total, delTransaction, id, transType } = this.props;
+  const switchMenu = () => setIsOpenMenu((prevIsOpenMenu) => !prevIsOpenMenu);
 
-    return (
-      <li>
-        <p>{date}</p>
-        <p>{time}</p>
-        <p>{total}</p>
-        <p>{currency}</p>
-        <p>{comment}</p>
+  const { comment, currency, date, time, total, id, transType } = transaction;
+  return (
+    <li>
+      <p>{date}</p>
+      <p>{time}</p>
+      <p>{total}</p>
+      <p>{currency}</p>
+      <p>{comment}</p>
 
-        <button onClick={this.switchMenu} type="button">
-          ...
-        </button>
-        {this.state.isOpenMenu && (
-          <div>
-            <button type="button" onClick={()=>delTransaction({id,transType})}>
-              Delete
-            </button>
-            <button type="button" onClick={null}>
-              Edit
-            </button>
-          </div>
-        )}
-      </li>
-    );
-  }
-}
+      <button onClick={switchMenu} type="button">
+        ...
+      </button>
+      {isOpenMenu && (
+        <div>
+          <button
+            type="button"
+            onClick={() => delTransaction({ id, transType })}
+          >
+            Delete
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              switchEditForm(transaction);
+            }}
+          >
+            Edit
+          </button>
+        </div>
+      )}
+    </li>
+  );
+};
 
 export default TransactionListItem;

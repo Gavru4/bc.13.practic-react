@@ -1,55 +1,66 @@
 {
-  "incomes": [],
+  "incomes": [
+    {
+      "date": "2022-02-22",
+      "time": "",
+      "category": "eat",
+      "currency": "UAH",
+      "comment": "rthhrt",
+      "total": "",
+      "transType": "incomes",
+      "id": 1
+    },
+    {
+      "date": "2022-02-22",
+      "time": "",
+      "category": "eat",
+      "currency": "UAH",
+      "comment": "trh",
+      "total": "",
+      "transType": "incomes",
+      "id": 4
+    },
+    {
+      "date": "2022-02-22",
+      "time": "",
+      "category": "eat",
+      "currency": "UAH",
+      "comment": "rthr",
+      "total": "rtrt",
+      "transType": "incomes",
+      "id": 5
+    }
+  ],
   "costs": [
     {
-      "date": "2022-02-12",
-      "time": "15:41",
-      "category": "Еда",
-      "sum": "558",
-      "curency": "UAH",
-      "comment": "jhgjg",
-      "transType": "costs",
-      "id": "7eqgtNh0likB4jTRxwfUs"
-    },
-    {
-      "date": "2022-02-18",
-      "time": "15:56",
-      "category": "Еда",
-      "sum": "6778",
-      "curency": "UAH",
-      "comment": "fhhfjfgj",
-      "transType": "costs",
-      "id": "a8E0OHmTjzG9mwVJIO-qX"
-    },
-    {
       "date": "2022-02-22",
       "time": "",
       "category": "eat",
       "currency": "UAH",
-      "comment": "",
+      "comment": " b ",
       "total": "",
       "transType": "costs",
-      "id": "b5enJpo"
+      "id": 2
     },
     {
-      "date": "2022-02-22",
-      "time": "",
+      "date": "2022-02-27",
+      "time": "19:23",
       "category": "eat",
       "currency": "UAH",
-      "comment": "",
-      "total": "",
+      "comment": "dfghdfhff",
+      "total": "456",
       "transType": "costs",
-      "id": "eaMfWlg"
+      "id": 3
     },
     {
-      "date": "2022-02-22",
-      "time": "",
+      "date": "2022-02-27",
+      "time": "16:34",
       "category": "eat",
       "currency": "UAH",
-      "comment": "",
-      "total": "",
+      "comment": "08",
+      "total": "546657876",
       "transType": "costs",
-      "id": "JgnlV3C"
+      "id": 4
     }
   ]
 }

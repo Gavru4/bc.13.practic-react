@@ -14,7 +14,7 @@ class MainPage extends Component {
   };
 
   render() {
-    const { changePage, addTransaction } = this.props;
+    const { changePage } = this.props;
     const { isOpenCategories } = this.state;
 
     return (
@@ -22,7 +22,6 @@ class MainPage extends Component {
         <TransactionForm
           isOpenCategories={isOpenCategories}
           togleCategoryList={this.togleCategoryList}
-          addTransaction={addTransaction}
         />
         {!isOpenCategories && <MainBtns changePage={changePage} />}
       </>

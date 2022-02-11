@@ -28,3 +28,12 @@ export const removeTransactionApi = ({ id, transType }) => {
       throw err;
     });
 };
+
+export const editTransactionApi = ({ transType, transaction }) => {
+  return axios
+    .patch(baseUrl + transType + "/" + transaction.id, transaction)
+    .then((res) => res.data)
+    .catch((err) => {
+      throw err;
+    });
+};
