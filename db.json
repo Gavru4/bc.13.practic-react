@@ -5,16 +5,6 @@
       "time": "",
       "category": "eat",
       "currency": "UAH",
-      "comment": "rthhrt",
-      "total": "",
-      "transType": "incomes",
-      "id": 1
-    },
-    {
-      "date": "2022-02-22",
-      "time": "",
-      "category": "eat",
-      "currency": "UAH",
       "comment": "trh",
       "total": "",
       "transType": "incomes",
@@ -61,6 +51,26 @@
       "total": "546657876",
       "transType": "costs",
       "id": 4
+    },
+    {
+      "date": "2022-02-22",
+      "time": "",
+      "category": "eat",
+      "currency": "UAH",
+      "comment": "",
+      "total": "",
+      "transType": "costs",
+      "id": 5
+    },
+    {
+      "date": "2022-02-22",
+      "time": "",
+      "category": "eat",
+      "currency": "UAH",
+      "comment": "",
+      "total": "",
+      "transType": "costs",
+      "id": 6
     }
   ]
 }

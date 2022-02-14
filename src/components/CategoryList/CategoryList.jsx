@@ -1,6 +1,16 @@
 import React, { Component } from "react";
 import { nanoid } from "nanoid";
-
+import { Link } from "react-router-dom";
+const btnStyles = {
+  padding: "10px",
+  marginRight: "20px",
+  marginBottom: "20px",
+  borderRadius: "10px",
+  outline: "none",
+  border: "2px solid #212121",
+  textDecoration: "none",
+  color: "#212121",
+};
 class CategoryList extends Component {
   state = { inputCategory: "" };
 
@@ -27,9 +37,9 @@ class CategoryList extends Component {
     const { categoriesList, togleCategoryList, setCategory } = this.props;
     return (
       <>
-        <button type="button" onClick={togleCategoryList}>
+        <Link style={btnStyles} to={"/"}>
           Back
-        </button>
+        </Link>
         <ul>
           {categoriesList.map((el) => (
             <li key={el.id}>

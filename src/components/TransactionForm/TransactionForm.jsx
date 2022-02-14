@@ -2,6 +2,8 @@ import { useState } from "react";
 import { editTransactionApi, postTransaction } from "../../api";
 import CategoryList from "../CategoryList/CategoryList";
 import { useTransactionsContext } from "../../context/TransactionsProvider/TransactionsProvider";
+import { Route, Switch } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 const initialForm = {
   date: "2022-02-22",
@@ -21,6 +23,8 @@ const TransactionForm = ({
   togleCategoryList,
   editingTransaction,
 }) => {
+  const history = useHistory();
+
   const { addTransaction } = useTransactionsContext();
   const [form, setForm] = useState(() =>
     editingTransaction ? editingTransaction : initialForm
@@ -32,6 +36,11 @@ const TransactionForm = ({
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
   };
+
+  const openCategoryList = () => {
+    history.push("/categories-list");
+  };
+
   const handleChangeTransType = (e) => {
     const { value } = e.target;
     setTransType(value);
@@ -65,8 +74,8 @@ const TransactionForm = ({
 
   return (
     <>
-      {!isOpenCategories ? (
-        <>
+      <Switch>
+        <Route path={"/"} exact>
           <select
             name="transType"
             onChange={handleChangeTransType}
@@ -75,7 +84,10 @@ const TransactionForm = ({
             <option value="incomes">Incomes</option>
             <option value="costs">Costs</option>
           </select>
-          <form onSubmit={handleSubmitTrans}>
+          <form
+            onSubmit={handleSubmitTrans}
+            style={{ display: "flex", flexDirection: "column" }}
+          >
             <label>
               Day
               <input
@@ -102,7 +114,7 @@ const TransactionForm = ({
                 name="category"
                 type="button"
                 value={category}
-                onClick={togleCategoryList}
+                onClick={openCategoryList}
               />
             </label>
 
@@ -138,15 +150,16 @@ const TransactionForm = ({
             </label>
             <button type="submit">Submit</button>
           </form>
-        </>
-      ) : (
-        <CategoryList
-          categoriesList={categoriesList}
-          addCategory={addCategory}
-          togleCategoryList={togleCategoryList}
-          setCategory={setCategory}
-        />
-      )}
+        </Route>
+        <Route path={"/categories-list"}>
+          <CategoryList
+            categoriesList={categoriesList}
+            addCategory={addCategory}
+            togleCategoryList={togleCategoryList}
+            setCategory={setCategory}
+          />
+        </Route>
+      </Switch>
     </>
   );
 };
