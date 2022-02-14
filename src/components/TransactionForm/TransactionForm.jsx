@@ -4,6 +4,7 @@ import CategoryList from "../CategoryList/CategoryList";
 import { useTransactionsContext } from "../../context/TransactionsProvider/TransactionsProvider";
 import { Route, Switch } from "react-router-dom";
 import { useHistory } from "react-router-dom";
+import { useRouteMatch } from "react-router-dom";
 
 const initialForm = {
   date: "2022-02-22",
@@ -24,8 +25,9 @@ const TransactionForm = ({
   editingTransaction,
 }) => {
   const history = useHistory();
+  const match = useRouteMatch();
 
-  const { addTransaction } = useTransactionsContext();
+  const { addTransaction, editTrensaction } = useTransactionsContext();
   const [form, setForm] = useState(() =>
     editingTransaction ? editingTransaction : initialForm
   );
@@ -56,7 +58,9 @@ const TransactionForm = ({
   const handleSubmitTrans = (e) => {
     e.preventDefault();
     if (editingTransaction) {
-      editTransactionApi({ transType, transaction: form });
+      editTransactionApi({ transType, transaction: form }).then((res) =>
+        editTrensaction(res)
+      );
     } else {
       postTransaction({ transType, transaction: { ...form, transType } }).then(
         (data) => addTransaction(data)
@@ -70,12 +74,12 @@ const TransactionForm = ({
     togleCategoryList();
   };
 
-  const { data, time, category, total, currency, comment } = form;
+  const { date, time, category, total, currency, comment } = form;
 
   return (
     <>
       <Switch>
-        <Route path={"/"} exact>
+        <Route path={match.path} exact>
           <select
             name="transType"
             onChange={handleChangeTransType}
@@ -93,7 +97,7 @@ const TransactionForm = ({
               <input
                 name="date"
                 type="date"
-                value={data}
+                value={date}
                 onChange={handleChangeForm}
               />
             </label>
@@ -151,7 +155,7 @@ const TransactionForm = ({
             <button type="submit">Submit</button>
           </form>
         </Route>
-        <Route path={"/categories-list"}>
+        <Route path={match.path + "/categories-list"}>
           <CategoryList
             categoriesList={categoriesList}
             addCategory={addCategory}
