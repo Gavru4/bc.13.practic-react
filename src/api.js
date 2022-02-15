@@ -11,6 +11,15 @@ export const postTransaction = ({ transType, transaction }) => {
     });
 };
 
+export const editTransactionApi = ({ transType, transaction }) => {
+  return axios
+    .patch(baseUrl + transType +"/"+transaction.id, transaction)
+    .then((res) => res.data)
+    .catch((err) => {
+      throw err;
+    });
+};
+
 export const getTransactions = (transType) => {
   return axios
     .get(baseUrl + transType)
@@ -20,20 +29,9 @@ export const getTransactions = (transType) => {
     });
 };
 
-export const removeTransactionApi = ({ id, transType }) => {
+export const removeTransactionApi = ({id, transType}) => {
   return axios
     .delete(baseUrl + transType + "/" + id)
     .then((res) => res.data)
-    .catch((err) => {
-      throw err;
-    });
-};
-
-export const editTransactionApi = ({ transType, transaction }) => {
-  return axios
-    .patch(baseUrl + transType + "/" + transaction.id, transaction)
-    .then((res) => res.data)
-    .catch((err) => {
-      throw err;
-    });
+    .catch((err) => {throw err});
 };

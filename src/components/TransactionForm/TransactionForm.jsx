@@ -14,20 +14,22 @@ const initialForm = {
   comment: "",
   total: "",
 };
+
 const initialCategoriesList = [
   { id: 1, title: "Eat" },
   { id: 2, title: "Drink" },
 ];
 
 const TransactionForm = ({
-  isOpenCategories,
   togleCategoryList,
+  isOpenCategories,
   editingTransaction,
 }) => {
-  const history = useHistory();
-  const match = useRouteMatch();
+  const history=useHistory();
 
-  const { addTransaction, editTrensaction } = useTransactionsContext();
+  const match=useRouteMatch();
+// console.log(editingTransaction);
+  const { addTransaction,editTransaction } = useTransactionsContext();
   const [form, setForm] = useState(() =>
     editingTransaction ? editingTransaction : initialForm
   );
@@ -39,9 +41,7 @@ const TransactionForm = ({
     setForm((prev) => ({ ...prev, [name]: value }));
   };
 
-  const openCategoryList = () => {
-    history.push("/categories-list");
-  };
+  const openCategoryList=()=>{history.push("/categories-list")}
 
   const handleChangeTransType = (e) => {
     const { value } = e.target;
@@ -49,18 +49,14 @@ const TransactionForm = ({
   };
 
   const addCategory = (newCategory) => {
-    setCategoriesList((prevCategoriesList) => [
-      ...prevCategoriesList,
-      newCategory,
-    ]);
+    setCategoriesList((prevCategoryList) => [...prevCategoryList, newCategory]);
   };
 
   const handleSubmitTrans = (e) => {
     e.preventDefault();
     if (editingTransaction) {
-      editTransactionApi({ transType, transaction: form }).then((res) =>
-        editTrensaction(res)
-      );
+      editTransactionApi({ transType, transaction: form }).then(res=>editTransaction(res));
+    
     } else {
       postTransaction({ transType, transaction: { ...form, transType } }).then(
         (data) => addTransaction(data)
@@ -77,94 +73,91 @@ const TransactionForm = ({
   const { date, time, category, total, currency, comment } = form;
 
   return (
-    <>
-      <Switch>
-        <Route path={match.path} exact>
-          <select
-            name="transType"
-            onChange={handleChangeTransType}
-            value={transType}
-          >
-            <option value="incomes">Incomes</option>
-            <option value="costs">Costs</option>
-          </select>
-          <form
-            onSubmit={handleSubmitTrans}
-            style={{ display: "flex", flexDirection: "column" }}
-          >
-            <label>
-              Day
-              <input
-                name="date"
-                type="date"
-                value={date}
-                onChange={handleChangeForm}
-              />
-            </label>
+    <Switch>
+      <Route path={match.path} exact>
+        <select
+          name="transType"
+          onChange={handleChangeTransType}
+          value={transType}
+        >
+          <option value="incomes">Incomes</option>
+          <option value="costs">Costs</option>
+        </select>
+        <form onSubmit={handleSubmitTrans}>
+          <label>
+            Day
+            <input
+              name="date"
+              type="date"
+              value={date}
+              onChange={handleChangeForm}
+            />
+          </label>
 
-            <label>
-              Time
-              <input
-                name="time"
-                type="time"
-                value={time}
-                onChange={handleChangeForm}
-              />
-            </label>
+          <label>
+            Time
+            <input
+              name="time"
+              type="time"
+              value={time}
+              onChange={handleChangeForm}
+            />
+          </label>
 
-            <label>
-              Category
-              <input
-                name="category"
-                type="button"
-                value={category}
-                onClick={openCategoryList}
-              />
-            </label>
+          <label>
+            Category
+            <input
+              name="category"
+              type="button"
+              value={category}
+              onClick={openCategoryList}
+            />
+          </label>
 
-            <label>
-              Total
-              <input
-                name="total"
-                type="text"
-                placeholder="Enter sum"
-                value={total}
-                onChange={handleChangeForm}
-              />
-            </label>
+          <label>
+            Total
+            <input
+              name="total"
+              type="text"
+              placeholder="Enter sum"
+              value={total}
+              onChange={handleChangeForm}
+            />
+          </label>
 
-            <label>
-              Currency
-              <input
-                name="currency"
-                type="button"
-                value={currency}
-                onClick={null}
-              />
-            </label>
+          <label>
+            Currency
+            <input
+              name="currency"
+              type="button"
+              value={currency}
+              onClick={null}
+            />
+          </label>
 
-            <label>
-              <input
-                name="comment"
-                type="text"
-                placeholder="Comment"
-                value={comment}
-                onChange={handleChangeForm}
-              />
-            </label>
-            <button type="submit">Submit</button>
-          </form>
-        </Route>
-        <Route path={match.path + "/categories-list"}>
-          <CategoryList
-            categoriesList={categoriesList}
-            addCategory={addCategory}
-            togleCategoryList={togleCategoryList}
-            setCategory={setCategory}
-          />
-        </Route>
-      </Switch>
-    </>
+          <label>
+            <input
+              name="comment"
+              type="text"
+              placeholder="Comment"
+              value={comment}
+              onChange={handleChangeForm}
+            />
+          </label>
+          <button className="submit" type="submit">
+            Submit
+          </button>
+        </form>
+      </Route>
+      <Route path={match.path+"/categories-list"}>
+        <CategoryList
+          categoriesList={categoriesList}
+          addCategory={addCategory}
+          togleCategoryList={togleCategoryList}
+          setCategory={setCategory}
+        />
+      </Route>
+    </Switch>
   );
 };
 export default TransactionForm;

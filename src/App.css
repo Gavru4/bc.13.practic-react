@@ -1,0 +1,125 @@
+.App {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 auto;
+  padding: 30px 10px;
+}
+input,
+select,
+button {
+  padding: 4px 10px;
+  margin-bottom: 10px;
+  margin-left: 3px;
+  border-radius: 10px;
+  outline: none;
+  width: 120px;
+  text-align: center;
+}
+
+form {
+  width: 450px;
+  border: 3px solid orange;
+  border-radius: 5px;
+  padding: 15px;
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(2, 1fr);
+  justify-items: end;
+  margin-bottom: 20px;
+  background-color: #fff;
+  color: rgb(53, 39, 15);
+  font-weight: 500;
+}
+
+button {
+  min-width: 40%;
+  border: 2px solid orange;
+  cursor: pointer;
+  color: rgb(68, 48, 10);
+  font-weight: 500;
+  cursor: pointer;
+}
+
+button:hover,
+button:focus {
+  background-color: orange;
+  color: #fff;
+}
+
+.submit {
+  /* grid-row-start: 4;
+  grid-row-end: 5; */
+  font-weight: 500;
+  color: rgb(68, 48, 10);
+  font-weight: 500;
+  grid-column-start: 1;
+  grid-column-end: 3;
+  display: grid;
+  justify-items: center;
+  border: 3px solid orange;
+  cursor: pointer;
+}
+
+.submit:hover,
+.submit:focus {
+  background-color: orange;
+  color: #fff;
+}
+
+input {
+  background-color: rgb(253, 192, 78);
+  color: #fff;
+  border-radius: 5px;
+  border: 1px solid orange;
+  font-size: 14px;
+  background: #ffa500;
+  background: repeating-linear-gradient(90deg, #ffa500 1%, #fdd07d 2%);
+  background: -webkit-repeating-linear-gradient(90deg, #ffa500 1%, #fdd07d 2%);
+  background: -moz-repeating-linear-gradient(90deg, #ffa500 1%, #fdd07d 2%);
+  min-width: 130px;
+}
+
+select {
+  border: 2px solid orange;
+  font-size: 14px;
+  color: rgb(68, 48, 10);
+  font-weight: 500;
+  cursor: context-menu;
+}
+
+p,
+h1,
+.link {
+  text-decoration: none;
+  min-width: 120px;
+  background-color: #fff;
+  cursor: pointer;
+  text-align: center;
+  color: rgb(53, 39, 15);
+  border-radius: 5px;
+  border: 1px solid orange;
+  padding: 2px;
+  margin-top: 0;
+  margin-bottom: 10px;
+  
+}
+.link{
+  margin-top: 10px;
+}
+h1{
+  font-size: 20px;
+  padding: 5px 10px; 
+}
+
+ul{
+  list-style: none;
+  padding: 10px;
+  border: 2px solid orange;
+  width: 250px;
+  margin: 0 auto;
+}
+li{
+  display: block;
+  margin: 0 auto;
+}

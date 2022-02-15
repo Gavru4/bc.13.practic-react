@@ -1,4 +1,4 @@
-import { createContext, useState, useEffect, useContext } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { getTransactions, removeTransactionApi } from "../../api";
 
 const TransactionsContext = createContext();
@@ -9,32 +9,12 @@ const TransactionsProvider = ({ children }) => {
   const [incomes, setIncomes] = useState([]);
 
   const addTransaction = (newTrans) => {
-    const transType = newTrans.transType; //costs/incomes
-
+    const transType = newTrans.transType;
     transType === "costs" && setCosts((prevCosts) => [...prevCosts, newTrans]);
-    transType === "incomes" &&
-      setCosts((prevIncomes) => [...prevIncomes, newTrans]);
-  };
-  const editTrensaction = (transaction) => {
-    const transType = transaction.transType;
 
-    transType === "costs" &&
-      setCosts((prevCosts) =>
-        prevCosts.map((el) => (el.id === transaction.id ? transaction : el))
-      );
     transType === "incomes" &&
-      setIncomes((prevIncomes) =>
-        prevIncomes.map((el) => (el.id === transaction.id ? transaction : el))
-      );
+      setIncomes((prevIncomes) => [...prevIncomes, newTrans]);
   };
-  useEffect(() => {
-    getTransactions("costs")
-      .then((costs) => setCosts(costs))
-      .catch((err) => console.log(err));
-    getTransactions("incomes")
-      .then((incomes) => setIncomes(incomes))
-      .catch((err) => console.log(err));
-  }, []);
 
   const delTransaction = ({ id, transType }) => {
     removeTransactionApi({ id, transType }).then((res) => {
@@ -45,15 +25,28 @@ const TransactionsProvider = ({ children }) => {
     });
   };
 
+const editTransaction=(transaction)=>{
+const transType=transaction.transType;
+transType === "costs" && setCosts((prevCosts) =>prevCosts.map((el)=>el.id===transaction.id?transaction:el ) );
+
+transType === "incomes" &&
+  setIncomes((prevIncomes) => prevIncomes.map((el)=>el.id===transaction.id?transaction:el ));
+}
+
+  useEffect(() => {
+    getTransactions("costs")
+      .then((costs) => setCosts(costs))
+      .catch((err) => console.log(err));
+    getTransactions("incomes")
+      .then((incomes) => setIncomes(incomes))
+      .catch((err) => console.log(err));
+  }, []);
+
+
+
   return (
     <TransactionsContext.Provider
-      value={{
-        delTransaction,
-        addTransaction,
-        editTrensaction,
-        costs,
-        incomes,
-      }}
+      value={{ delTransaction, costs, incomes, addTransaction,editTransaction }}
     >
       {children}
     </TransactionsContext.Provider>
