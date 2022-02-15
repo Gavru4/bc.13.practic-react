@@ -25,7 +25,7 @@ class CategoryList extends Component {
   };
 
   render() {
-    const { categoriesList, togleCategoryList, setCategory } = this.props;
+    const { categoriesList, setCategory } = this.props;
     return (
       <>
         <Link className="link" to={"/"}>
