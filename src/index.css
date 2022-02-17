@@ -12,9 +12,9 @@ body {
   /* background: repeating-linear-gradient( from 45deg, #ffe7bc, orange);
    */
   background: #ffa500;
-  /* background: repeating-linear-gradient(0deg,#ffa500 1%, #ffe7bc 2%);
-   background: -webkit-repeating-linear-gradient(0deg,#ffa500 1%, #ffe7bc 2%);
-   /* background: -moz-repeating-linear-gradient(0deg,#ffa500 1%, #ffe7bc 2%); */
+  background: repeating-linear-gradient(0deg, #ffa500 1%, #ffe7bc 2%);
+  background: -webkit-repeating-linear-gradient(0deg, #ffa500 1%, #ffe7bc 2%);
+  background: -moz-repeating-linear-gradient(0deg, #ffa500 1%, #ffe7bc 2%);
 }
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",

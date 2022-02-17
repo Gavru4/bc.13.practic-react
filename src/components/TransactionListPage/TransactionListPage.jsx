@@ -17,16 +17,9 @@ const TransactionListPage = () => {
   return (
     <>
       <h1>TransactionListPage</h1>
-      {isEdit && (
-        <TransactionForm
-          setIsEdit={setIsEdit}
-          editingTransaction={editingTransaction}
-        />
-      )}
+      {isEdit && <TransactionForm editingTransaction={editingTransaction} setIsEdit={setIsEdit}/>}
       <TransactionList transType={transType} switchEditForm={switchEditForm} />
-      <Link className="link" to={"/"}>
-        Back
-      </Link>
+      <Link className="link" to={"/"}>Back</Link>
     </>
   );
 };

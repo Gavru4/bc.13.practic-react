@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { getTransactions, removeTransactionApi } from "../../api";
+import { getTransactions, removeTransactionApi } from "../api";
 
 const TransactionsContext = createContext();
 export const useTransactionsContext = () => useContext(TransactionsContext);
@@ -25,13 +25,18 @@ const TransactionsProvider = ({ children }) => {
     });
   };
 
-const editTransaction=(transaction)=>{
-const transType=transaction.transType;
-transType === "costs" && setCosts((prevCosts) =>prevCosts.map((el)=>el.id===transaction.id?transaction:el ) );
+  const editTransaction = (transaction) => {
+    const transType = transaction.transType;
+    transType === "costs" &&
+      setCosts((prevCosts) =>
+        prevCosts.map((el) => (el.id === transaction.id ? transaction : el))
+      );
 
-transType === "incomes" &&
-  setIncomes((prevIncomes) => prevIncomes.map((el)=>el.id===transaction.id?transaction:el ));
-}
+    transType === "incomes" &&
+      setIncomes((prevIncomes) =>
+        prevIncomes.map((el) => (el.id === transaction.id ? transaction : el))
+      );
+  };
 
   useEffect(() => {
     getTransactions("costs")
@@ -42,11 +47,15 @@ transType === "incomes" &&
       .catch((err) => console.log(err));
   }, []);
 
-
-
   return (
     <TransactionsContext.Provider
-      value={{ delTransaction, costs, incomes, addTransaction,editTransaction }}
+      value={{
+        delTransaction,
+        costs,
+        incomes,
+        addTransaction,
+        editTransaction,
+      }}
     >
       {children}
     </TransactionsContext.Provider>

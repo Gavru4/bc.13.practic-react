@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useTransactionsContext } from "../../context/TransactionsProvider/TransactionsProvider";
+import { useTransactionsContext } from "../../context/TransactionsProvider";
 
 const TransactionListItem = ({ transaction, switchEditForm }) => {
   const { delTransaction } = useTransactionsContext();
@@ -8,7 +8,7 @@ const TransactionListItem = ({ transaction, switchEditForm }) => {
 
   const switchMenu = () => setIsOpenMenu((prevIsOpenMenu) => !prevIsOpenMenu);
 
-  const { comment, category, currency, date, time, total, id, transType } =
+  const { comment, currency, date, time, total, id, transType, category } =
     transaction;
 
   return (
@@ -19,12 +19,12 @@ const TransactionListItem = ({ transaction, switchEditForm }) => {
       <p> {time}</p>
       <span>total</span>
       <p>{total}</p>
+      <span>category</span>
+      <p>{category}</p>
       <span>currency</span>
       <p>{currency}</p>
       <span>comment</span>
       <p>{comment}</p>
-      <span>category</span>
-      <p>{category}</p>
 
       <button onClick={switchMenu} type="button">
         ...

@@ -3,13 +3,16 @@ import ReactDOM from "react-dom";
 import { BrowserRouter } from "react-router-dom";
 import "./index.css";
 import App from "./App";
-import TransactionsProvider from "./context/TransactionsProvider/TransactionsProvider";
+import TransactionsProvider from "./context/TransactionsProvider";
+import CategoriesProvider from "./context/CategoriesProvider";
 
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
       <TransactionsProvider>
-        <App />
+        <CategoriesProvider>
+          <App />
+        </CategoriesProvider>
       </TransactionsProvider>
     </BrowserRouter>
   </React.StrictMode>,

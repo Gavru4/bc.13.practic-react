@@ -1,4 +1,4 @@
-import { useTransactionsContext } from "../../context/TransactionsProvider/TransactionsProvider";
+import { useTransactionsContext } from "../../context/TransactionsProvider";
 import TransactionListItem from "../TransactionListItem/TransactionListItem";
 
 const TransactionList = ({ transType, switchEditForm }) => {
