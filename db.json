@@ -9,6 +9,16 @@
       "total": "",
       "transType": "incomes",
       "id": 4
+    },
+    {
+      "date": "2022-02-22",
+      "time": "15:26",
+      "category": "eat",
+      "currency": "UAH",
+      "comment": "rgrthrt",
+      "total": "",
+      "transType": "incomes",
+      "id": 5
     }
   ],
   "costs": [
@@ -21,6 +31,28 @@
       "total": "",
       "transType": "costs",
       "id": 3
+    },
+    {
+      "date": "2022-02-22",
+      "time": "",
+      "category": "eat",
+      "currency": "UAH",
+      "comment": "",
+      "total": "",
+      "transType": "costs",
+      "id": 4
+    },
+    {
+      "date": "2022-02-22",
+      "time": "",
+      "category": "eat",
+      "currency": "UAH",
+      "comment": "",
+      "total": "",
+      "transType": "costs",
+      "id": 5
     }
-  ]
+  ],
+  "incomesCat": [],
+  "costsCat": []
 }

@@ -5,6 +5,11 @@ import { useTransactionsContext } from "../../context/TransactionsProvider";
 import { Route, Switch } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import { useRouteMatch } from "react-router-dom";
+import { connect } from "react-redux";
+import {
+  addCosts,
+  addIncomes,
+} from "../../redux/transactions/transactionsActions";
 
 const initialForm = {
   date: "2022-02-22",
@@ -17,14 +22,15 @@ const initialForm = {
 
 const TransactionForm = ({
   togleCategoryList,
-  isOpenCategories,
   editingTransaction,
   setIsEdit,
+  addIncomesProps,
+  addCostsProps,
 }) => {
   const history = useHistory();
 
   const match = useRouteMatch();
-  const { addTransaction, editTransaction } = useTransactionsContext();
+  const { editTransaction } = useTransactionsContext();
   const [form, setForm] = useState(() =>
     editingTransaction ? editingTransaction : initialForm
   );
@@ -46,10 +52,6 @@ const TransactionForm = ({
     setTransType(value);
   };
 
-  // const addCategory = (newCategory) => {
-  //   setCategoriesList((prevCategoryList) => [...prevCategoryList, newCategory]);
-  // };
-
   const handleSubmitTrans = (e) => {
     e.preventDefault();
     if (editingTransaction) {
@@ -60,9 +62,12 @@ const TransactionForm = ({
         setIsEdit(false);
       });
     } else {
-      postTransaction({ transType, transaction: { ...form, transType } }).then(
-        (data) => addTransaction(data)
-      );
+      postTransaction({ transType, transaction: { ...form, transType } })
+        .then((data) => {
+          transType === "incomes" && addIncomesProps(data);
+          transType === "costs" && addCostsProps(data);
+        })
+        .catch((err) => console.log(err));
     }
     setForm(initialForm);
   };
@@ -76,7 +81,6 @@ const TransactionForm = ({
 
   return (
     <Switch>
-      {/* {console.log(match.path + "/categories-list")} */}
       <Route path={match.path} exact>
         <select
           name="transType"
@@ -169,4 +173,9 @@ const TransactionForm = ({
     </Switch>
   );
 };
-export default TransactionForm;
+const mapDispatchToProps = {
+  addIncomesProps: addIncomes,
+  addCostsProps: addCosts,
+};
+
+export default connect(null, mapDispatchToProps)(TransactionForm);

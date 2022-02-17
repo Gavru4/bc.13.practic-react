@@ -38,15 +38,6 @@ const TransactionsProvider = ({ children }) => {
       );
   };
 
-  useEffect(() => {
-    getTransactions("costs")
-      .then((costs) => setCosts(costs))
-      .catch((err) => console.log(err));
-    getTransactions("incomes")
-      .then((incomes) => setIncomes(incomes))
-      .catch((err) => console.log(err));
-  }, []);
-
   return (
     <TransactionsContext.Provider
       value={{
