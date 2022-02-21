@@ -4,7 +4,6 @@ import TransactionListItem from "../TransactionListItem/TransactionListItem";
 
 const TransactionList = ({ switchEditForm, transType }) => {
   const transactions = useSelector((state) => {
-    console.log(state.transactions);
     return state.transactions;
   });
   return (

@@ -1,51 +1,36 @@
 import { createReducer, combineReducers } from "@reduxjs/toolkit";
-import {
-  addCosts,
-  addIncomes,
-  getCosts,
-  getIncomes,
-  removeCosts,
-  removeIncomes,
-} from "./transactionsActions";
+import { removeCosts, removeIncomes } from "./transactionsActions";
+import { addCosts, addIncomes, getTransactions } from "./transactionOperation";
 
 const costsReducer = createReducer([], {
-  [addCosts]: (state, { payload }) => [...state, payload],
-  [getCosts]: (_, { payload }) => payload,
+  [addCosts.fulfilled]: (state, { payload }) => [...state, payload],
+  [getTransactions.fulfilled]: (_, { payload: { costs } }) => costs,
   [removeCosts]: (state, { payload }) =>
     state.filter((el) => el.id !== payload),
 });
 
-// const costsReducer = (state = [], { type, payload }) => {
-//   switch (type) {
-//     case "transactions/addCosts":
-//       return [...state, payload];
-//     case "transactions/getCosts":
-//       return payload;
-//     default:
-//       return state;
-//   }
-// };
-
 const incomesRudecer = createReducer([], {
-  [addIncomes]: (state, { payload }) => [...state, payload],
-  [getIncomes]: (_, { payload }) => payload,
+  [addIncomes.fulfilled]: (state, { payload }) => [...state, payload],
+  [getTransactions.fulfilled]: (_, { payload: { incomes } }) => incomes,
   [removeIncomes]: (state, { payload }) =>
     state.filter((el) => el.id !== payload),
 });
 
-// const incomesRudecer = (state = [], { type, payload }) => {
-//   switch (type) {
-//     case "transactions/addIncomes":
-//       return [...state, payload];
-//     case "transactions/getIncomes":
-//       return payload;
-//     default:
-//       return state;
-//   }
-// };
+const isLoadingReduser = createReducer(false, {
+  [addCosts.pending]: () => true,
+  [addCosts.fulfilled]: () => false,
+  [addCosts.rejected]: () => false,
+  [addIncomes.pending]: () => true,
+  [addIncomes.fulfilled]: () => false,
+  [addIncomes.rejected]: () => false,
+  [getTransactions.pending]: () => true,
+  [getTransactions.fulfilled]: () => false,
+  [getTransactions.rejected]: () => false,
+});
 
 const transactionsReducer = combineReducers({
   costs: costsReducer,
   incomes: incomesRudecer,
+  isLoading: isLoadingReduser,
 });
 export default transactionsReducer;

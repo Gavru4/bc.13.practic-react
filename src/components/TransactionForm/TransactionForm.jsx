@@ -9,7 +9,7 @@ import { useDispatch } from "react-redux";
 import {
   addCosts,
   addIncomes,
-} from "../../redux/transactions/transactionsActions";
+} from "../../redux/transactions/transactionOperation";
 
 const initialForm = {
   date: "2022-02-22",
@@ -24,8 +24,6 @@ const TransactionForm = ({
   togleCategoryList,
   editingTransaction,
   setIsEdit,
-  // addIncomesProps,
-  // addCostsProps,
 }) => {
   const dispatch = useDispatch();
   const history = useHistory();
