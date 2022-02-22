@@ -16,28 +16,6 @@ const TransactionsProvider = ({ children }) => {
       setIncomes((prevIncomes) => [...prevIncomes, newTrans]);
   };
 
-  // const delTransaction = ({ id, transType }) => {
-  //   removeTransactionApi({ id, transType }).then((res) => {
-  //     transType === "costs" &&
-  //       setCosts((prevCosts) => prevCosts.filter((el) => el.id !== id));
-  //     transType === "incomes" &&
-  //       setIncomes((prevIncomes) => prevIncomes.filter((el) => el.id !== id));
-  //   });
-  // };
-
-  // const editTransaction = (transaction) => {
-  //   const transType = transaction.transType;
-  //   transType === "costs" &&
-  //     setCosts((prevCosts) =>
-  //       prevCosts.map((el) => (el.id === transaction.id ? transaction : el))
-  //     );
-
-  //   transType === "incomes" &&
-  //     setIncomes((prevIncomes) =>
-  //       prevIncomes.map((el) => (el.id === transaction.id ? transaction : el))
-  //     );
-  // };
-
   return (
     <TransactionsContext.Provider
       value={{

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { editTransactionApi, postTransaction } from "../../api";
+import { editTransactionApi } from "../../api";
 import CategoryList from "../CategoryList/CategoryList";
 import { useTransactionsContext } from "../../context/TransactionsProvider";
 import { Route, Switch } from "react-router-dom";
@@ -9,6 +9,7 @@ import { useDispatch } from "react-redux";
 import {
   addCosts,
   addIncomes,
+  editTransaction,
 } from "../../redux/transactions/transactionOperation";
 
 const initialForm = {
@@ -29,7 +30,7 @@ const TransactionForm = ({
   const history = useHistory();
 
   const match = useRouteMatch();
-  const { editTransaction } = useTransactionsContext();
+
   const [form, setForm] = useState(() =>
     editingTransaction ? editingTransaction : initialForm
   );
@@ -54,19 +55,11 @@ const TransactionForm = ({
   const handleSubmitTrans = (e) => {
     e.preventDefault();
     if (editingTransaction) {
-      console.log(form);
-      editTransactionApi({ transType, transaction: form }).then((res) => {
-        editTransaction(res);
-
-        setIsEdit(false);
-      });
+      dispatch(editTransaction({ transType, transaction: form }));
+      setIsEdit(false);
     } else {
-      postTransaction({ transType, transaction: { ...form, transType } })
-        .then((data) => {
-          transType === "incomes" && dispatch(addIncomes(data));
-          transType === "costs" && dispatch(addCosts(data));
-        })
-        .catch((err) => console.log(err));
+      transType === "incomes" && dispatch(addIncomes(form));
+      transType === "costs" && dispatch(addCosts(form));
     }
     setForm(initialForm);
   };
@@ -172,9 +165,4 @@ const TransactionForm = ({
     </Switch>
   );
 };
-// const mapDispatchToProps = {
-//   addIncomesProps: addIncomes,
-//   addCostsProps: addCosts,
-// };
-
 export default TransactionForm;

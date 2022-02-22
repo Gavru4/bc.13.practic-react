@@ -1,8 +1,14 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { getTransactionsApi, postTransaction } from "../../api";
+import {
+  editTransactionApi,
+  getTransactionsApi,
+  postTransaction,
+  removeTransactionApi,
+} from "../../api";
 
 const transformGetTransactions = (data) =>
   Object.entries(data).map(([id, transaction]) => ({ ...transaction, id }));
+
 export const addCosts = createAsyncThunk(
   "transaction/addCosts",
   async (transaction, thunkApi) => {
@@ -47,6 +53,34 @@ export const getTransactions = createAsyncThunk(
           ? transformGetTransactions(transaction.incomes)
           : [],
       };
+    } catch (error) {
+      return thunkApi.rejectWithValue(error.message);
+    }
+  }
+);
+
+export const removeTransaction = createAsyncThunk(
+  "transaction/removeTransaction",
+  async ({ transType, id }, thunkApi) => {
+    try {
+      await removeTransactionApi({ transType, id });
+      return { transType, id };
+    } catch (error) {
+      return thunkApi.rejectWithValue(error.message);
+    }
+  }
+);
+
+export const editTransaction = createAsyncThunk(
+  "transaction/editTransaction",
+  async ({ transType, transaction }, thunkApi) => {
+    try {
+      const editedTransaction = await editTransactionApi({
+        transType,
+        transaction,
+      });
+
+      return { transType, transaction: editedTransaction };
     } catch (error) {
       return thunkApi.rejectWithValue(error.message);
     }

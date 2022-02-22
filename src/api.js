@@ -13,8 +13,11 @@ export const postTransaction = ({ transType, transaction }) => {
 
 export const editTransactionApi = ({ transType, transaction }) => {
   return axios
-    .patch(baseUrl + transType + "/" + transaction.id, transaction)
-    .then((res) => res.data)
+    .put(
+      baseUrl + "/transaction/" + transType + "/" + transaction.id + ".json",
+      transaction
+    )
+    .then((res) => ({ ...res.data, id: transaction.id }))
     .catch((err) => {
       throw err;
     });
@@ -31,7 +34,7 @@ export const getTransactionsApi = () => {
 
 export const removeTransactionApi = ({ id, transType }) => {
   return axios
-    .delete(baseUrl + transType + "/" + id)
+    .delete(baseUrl + "/transaction/" + transType + "/" + id + ".json")
     .then((res) => res.data)
     .catch((err) => {
       throw err;

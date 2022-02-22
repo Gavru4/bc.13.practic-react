@@ -13,6 +13,7 @@ const TransactionList = ({ switchEditForm, transType }) => {
           transaction={transaction}
           key={transaction.id}
           switchEditForm={switchEditForm}
+          transType={transType}
         />
       ))}
     </ul>
